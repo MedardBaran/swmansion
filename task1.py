@@ -1,23 +1,23 @@
+import math
+
+
 def short_function(a, b):
     from sympy import isprime
     from collections import Counter
     return [i for i in a if not isprime(Counter(b)[i])]
 
 
-def _is_prime(n) -> bool:
-    """also available here: https://en.wikipedia.org/wiki/Primality_test#Pseudocode"""
-
+def _my_is_prime(n) -> bool:
     if n <= 3:
         return n > 1
-    elif n % 2 == 0 or n % 3 == 0:
+
+    if n % 2 == 0:
         return False
 
-    i = 5
-    while i * i <= n:
-        if n % i == 0 or n % (i + 2) == 0:
+    last_to_check = int(math.sqrt(n))
+    for i in range(3, last_to_check, 2):
+        if n % i == 0:
             return False
-        i += 6
-
     return True
 
 
@@ -36,7 +36,7 @@ def my_function(a, b):
             i = b.count(n)
             if i in primes:
                 excluded.add(n)
-            if _is_prime(i):
+            if _my_is_prime(i):
                 primes.add(i)
                 excluded.add(n)
             else:
